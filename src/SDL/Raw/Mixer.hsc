@@ -178,8 +178,13 @@ import SDL.Raw.Types    (RWops(..), Version(..))
 liftF "getVersion" "Mix_Linked_Version"
   [t|IO (Ptr Version)|]
 
+pattern SDL_MIXER_MAJOR_VERSION :: (Eq a, Num a) => a
 pattern SDL_MIXER_MAJOR_VERSION = (#const SDL_MIXER_MAJOR_VERSION)
+
+pattern SDL_MIXER_MINOR_VERSION :: (Eq a, Num a) => a
 pattern SDL_MIXER_MINOR_VERSION = (#const SDL_MIXER_MINOR_VERSION)
+
+pattern SDL_MIXER_PATCHLEVEL :: (Eq a, Num a) => a
 pattern SDL_MIXER_PATCHLEVEL    = (#const SDL_MIXER_PATCHLEVEL)
 
 type InitFlag = CInt
@@ -187,9 +192,16 @@ type InitFlag = CInt
 liftF "init" "Mix_Init"
   [t|InitFlag -> IO CInt|]
 
+pattern INIT_FLAC :: (Eq a, Num a) => a
 pattern INIT_FLAC       = (#const MIX_INIT_FLAC)
+
+pattern INIT_MOD :: (Eq a, Num a) => a
 pattern INIT_MOD        = (#const MIX_INIT_MOD)
+
+pattern INIT_MP3 :: (Eq a, Num a) => a
 pattern INIT_MP3        = (#const MIX_INIT_MP3)
+
+pattern INIT_OGG :: (Eq a, Num a) => a
 pattern INIT_OGG        = (#const MIX_INIT_OGG)
 
 liftF "quit" "Mix_Quit"
@@ -197,22 +209,46 @@ liftF "quit" "Mix_Quit"
 
 type Format = Word16
 
+pattern DEFAULT_FREQUENCY :: (Eq a, Num a) => a
 pattern DEFAULT_FREQUENCY = (#const MIX_DEFAULT_FREQUENCY)
+
+pattern DEFAULT_CHANNELS :: (Eq a, Num a) => a
 pattern DEFAULT_CHANNELS  = (#const MIX_DEFAULT_CHANNELS)
 
 liftF "openAudio" "Mix_OpenAudio"
   [t|CInt -> Format -> CInt -> CInt -> IO CInt|]
 
+pattern AUDIO_U8 :: (Eq a, Num a) => a
 pattern AUDIO_U8       = (#const AUDIO_U8)
+
+pattern AUDIO_S8 :: (Eq a, Num a) => a
 pattern AUDIO_S8       = (#const AUDIO_S8)
+
+pattern AUDIO_U16LSB :: (Eq a, Num a) => a
 pattern AUDIO_U16LSB   = (#const AUDIO_U16LSB)
+
+pattern AUDIO_S16LSB :: (Eq a, Num a) => a
 pattern AUDIO_S16LSB   = (#const AUDIO_S16LSB)
+
+pattern AUDIO_U16MSB :: (Eq a, Num a) => a
 pattern AUDIO_U16MSB   = (#const AUDIO_U16MSB)
+
+pattern AUDIO_S16MSB :: (Eq a, Num a) => a
 pattern AUDIO_S16MSB   = (#const AUDIO_S16MSB)
+
+pattern AUDIO_U16 :: (Eq a, Num a) => a
 pattern AUDIO_U16      = (#const AUDIO_U16)
+
+pattern AUDIO_S16 :: (Eq a, Num a) => a
 pattern AUDIO_S16      = (#const AUDIO_S16)
+
+pattern AUDIO_U16SYS :: (Eq a, Num a) => a
 pattern AUDIO_U16SYS   = (#const AUDIO_U16SYS)
+
+pattern AUDIO_S16SYS :: (Eq a, Num a) => a
 pattern AUDIO_S16SYS   = (#const AUDIO_S16SYS)
+
+pattern DEFAULT_FORMAT :: (Eq a, Num a) => a
 pattern DEFAULT_FORMAT = (#const MIX_DEFAULT_FORMAT)
 
 liftF "closeAudio" "Mix_CloseAudio"
@@ -265,6 +301,7 @@ liftF "quickLoadWAV" "Mix_QuickLoad_WAV"
 liftF "quickLoadRaw" "Mix_QuickLoad_RAW"
   [t|Ptr Word8 -> IO (Ptr Chunk)|]
 
+pattern MAX_VOLUME :: (Eq a, Num a) => a
 pattern MAX_VOLUME = (#const MIX_MAX_VOLUME)
 
 liftF "volumeChunk" "Mix_VolumeChunk"
@@ -278,6 +315,7 @@ liftF "freeChunk" "Mix_FreeChunk"
 liftF "allocateChannels" "Mix_AllocateChannels"
   [t|CInt -> IO CInt|]
 
+pattern CHANNELS :: (Eq a, Num a) => a
 pattern CHANNELS = (#const MIX_CHANNELS)
 
 type Channel = CInt
@@ -326,8 +364,13 @@ liftF "paused" "Mix_Paused"
 
 type Fading = (#type Mix_Fading)
 
+pattern NO_FADING :: (Eq a, Num a) => a
 pattern NO_FADING  = (#const MIX_NO_FADING)
+
+pattern FADING_IN :: (Eq a, Num a) => a
 pattern FADING_IN  = (#const MIX_FADING_IN)
+
+pattern FADING_OUT :: (Eq a, Num a) => a
 pattern FADING_OUT = (#const MIX_FADING_OUT)
 
 liftF "fadingChannel" "Mix_FadingChannel"
@@ -388,13 +431,28 @@ type MusicType = (#type Mix_MusicType)
 liftF "loadMUSType_RW" "Mix_LoadMUSType_RW"
   [t|Ptr RWops -> MusicType -> CInt -> IO (Ptr Music)|]
 
+pattern MUS_NONE :: (Eq a, Num a) => a
 pattern MUS_NONE    = (#const MUS_NONE)
+
+pattern MUS_CMD :: (Eq a, Num a) => a
 pattern MUS_CMD     = (#const MUS_CMD)
+
+pattern MUS_WAV :: (Eq a, Num a) => a
 pattern MUS_WAV     = (#const MUS_WAV)
+
+pattern MUS_MOD :: (Eq a, Num a) => a
 pattern MUS_MOD     = (#const MUS_MOD)
+
+pattern MUS_MID :: (Eq a, Num a) => a
 pattern MUS_MID     = (#const MUS_MID)
+
+pattern MUS_OGG :: (Eq a, Num a) => a
 pattern MUS_OGG     = (#const MUS_OGG)
+
+pattern MUS_MP3 :: (Eq a, Num a) => a
 pattern MUS_MP3     = (#const MUS_MP3)
+
+pattern MUS_FLAC :: (Eq a, Num a) => a
 pattern MUS_FLAC    = (#const MUS_FLAC)
 
 liftF "freeMusic" "Mix_FreeMusic"
@@ -459,6 +517,7 @@ liftF "getMusicHookData" "Mix_GetMusicHookData"
 
 -- 4.6 Effects
 
+pattern CHANNEL_POST :: (Eq a, Num a) => a
 pattern CHANNEL_POST = (#const MIX_CHANNEL_POST)
 
 type Effect = Channel -> Ptr () -> CInt -> Ptr() -> IO ()

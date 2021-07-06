@@ -1,11 +1,10 @@
-import qualified SDL.Raw.Mixer as Mix
+import Control.Monad (unless, when)
+import Foreign.C.String (withCString)
+import Foreign.Ptr (nullPtr)
 import qualified SDL
-
-import Control.Monad      (unless, when)
-import Foreign.C.String   (withCString)
-import Foreign.Ptr        (nullPtr)
+import qualified SDL.Raw.Mixer as Mix
 import System.Environment (getArgs)
-import System.Exit        (exitFailure)
+import System.Exit (exitFailure)
 
 main :: IO ()
 main = do
@@ -13,7 +12,7 @@ main = do
   fileName <- do
     args <- getArgs
     case args of
-      (arg:_) -> return arg
+      (arg : _) -> return arg
       _ -> do
         putStrLn "Usage: cabal run sdl2-mixer-raw <sound filename>"
         exitFailure
@@ -42,7 +41,7 @@ main = do
   -- wait until finished
   whileTrueM $ (/= 0) <$> Mix.playing channel
 
- -- free resources
+  -- free resources
   Mix.freeChunk sound
 
   -- close device

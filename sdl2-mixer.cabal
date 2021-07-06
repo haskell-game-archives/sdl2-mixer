@@ -1,135 +1,88 @@
+cabal-version: 2.4
 name:          sdl2-mixer
-version:       1.1.0
+version:       1.1.1
 synopsis:      Bindings to SDL2_mixer.
 description:   Haskell bindings to SDL2_mixer.
-license:       BSD3
+license:       BSD-3-Clause
 license-file:  LICENSE
-author:        Vladimir Semyonov <tempname011@gmail.com>
-               Siniša Biđin <sinisa@bidin.eu>
+author:
+  Vladimir Semyonov <tempname011@gmail.com>
+  Siniša Biđin <sinisa@bidin.eu>
+
 maintainer:    Siniša Biđin <sinisa@bidin.eu>
-copyright:     Copyright © 2015 Vladimir Semyonov
-               Copyright © 2015 Siniša Biđin
+copyright:
+  Copyright © 2015 Vladimir Semyonov
+  Copyright © 2015 Siniša Biđin
+
 category:      Sound, Foreign
 build-type:    Simple
-cabal-version: >=1.10
+tested-with:   GHC ==8.6.5 || ==8.8.4 || ==8.10.5 || ==9.0.1
 
 source-repository head
   type:     git
   location: https://github.com/sbidin/sdl2-mixer.git
 
-library
-  ghc-options: -Wall
+common common
+  build-depends:
+    , base                >=4.12 && <4.16
+    , data-default-class  ^>=0.1
+    , sdl2                ^>=2.5
 
+  ghc-options:      -Wall
+  default-language: Haskell2010
+
+library
+  import:            common
+  hs-source-dirs:    src
+  build-depends:
+    , bytestring        >=0.10 && <0.12
+    , lifted-base       ^>=0.2
+    , monad-control     ^>=1.0
+    , template-haskell  >=2.14 && <2.18
+    , th-abstraction    ^>=0.4
+    , vector            ^>=0.12
+
+  pkgconfig-depends: SDL2_mixer ==2.0.0 || >2.0.0
+
+  -- cabal-fmt: expand src -SDL.Raw.Helper
   exposed-modules:
-    SDL.Mixer,
+    SDL.Mixer
     SDL.Raw.Mixer
 
-  other-modules:
-    SDL.Raw.Helper
-
-  hs-source-dirs:
-    src
-
-  includes:
-    SDL_mixer.h
-
-  extra-libraries:
-    SDL2_mixer
-
-  pkgconfig-depends:
-    SDL2_mixer >= 2.0.0
-
-  c-sources:
-    cbits/helpers.c
-
-  build-depends:
-    base               >= 4.7 && < 5,
-    bytestring         >= 0.10.4.0,
-    data-default-class >= 0.0.1,
-    lifted-base        >= 0.2,
-    monad-control      >= 1.0,
-    sdl2               >= 2.0.0,
-    template-haskell,
-    vector             >= 0.10
-
-  default-language:
-    Haskell2010
+  other-modules:     SDL.Raw.Helper
+  includes:          SDL_mixer.h
+  extra-libraries:   SDL2_mixer
+  c-sources:         cbits/helpers.c
 
 flag example
   description: Build the example executables
   default:     False
 
-executable sdl2-mixer-basic
-  ghc-options: -Wall
-  hs-source-dirs: examples
-  main-is: Basic.hs
-  default-language: Haskell2010
+common app
+  build-depends: sdl2-mixer
+  ghc-options:   -O2
 
-  if flag(example)
-    build-depends:
-      base               >= 4.7 && < 5,
-      data-default-class >= 0.0.1,
-      sdl2               >= 2.0.0,
-      sdl2-mixer
-  else
+  if !flag(example)
     buildable: False
+
+executable sdl2-mixer-basic
+  import:  common, app
+  main-is: examples/Basic.hs
 
 executable sdl2-mixer-raw
-  ghc-options: -Wall
-  hs-source-dirs: examples
-  main-is: BasicRaw.hs
-  default-language: Haskell2010
-
-  if flag(example)
-    build-depends:
-      base               >= 4.7 && < 5,
-      sdl2               >= 2.0.0,
-      sdl2-mixer
-  else
-    buildable: False
+  import:  common, app
+  main-is: examples/BasicRaw.hs
 
 executable sdl2-mixer-jumbled
-  ghc-options: -Wall
-  hs-source-dirs: examples
-  main-is: Jumbled.hs
-  default-language: Haskell2010
-
-  if flag(example)
-    build-depends:
-      base               >= 4.7 && < 5,
-      data-default-class >= 0.0.1,
-      sdl2               >= 2.0.0,
-      sdl2-mixer
-  else
-    buildable: False
+  import:  common, app
+  main-is: examples/Jumbled.hs
 
 executable sdl2-mixer-music
-  ghc-options: -Wall
-  hs-source-dirs: examples
-  main-is: Music.hs
-  default-language: Haskell2010
-
-  if flag(example)
-    build-depends:
-      base               >= 4.7 && < 5,
-      data-default-class >= 0.0.1,
-      sdl2               >= 2.0.0,
-      sdl2-mixer
-  else
-    buildable: False
+  import:  common, app
+  main-is: examples/Music.hs
 
 executable sdl2-mixer-effect
-  ghc-options: -Wall -threaded
-  hs-source-dirs: examples
-  main-is: Effect.hs
-  default-language: Haskell2010
-
-  if flag(example)
-    build-depends:
-      base               >= 4.7 && < 5,
-      data-default-class >= 0.0.1,
-      sdl2               >= 2.0.0,
-      sdl2-mixer,
-      vector             >= 0.10
-  else
-    buildable: False
+  import:        common, app
+  ghc-options:   -threaded
+  main-is:       examples/Effect.hs
+  build-depends: vector ^>=0.12

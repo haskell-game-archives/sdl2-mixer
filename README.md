@@ -1,7 +1,9 @@
 # sdl2-mixer
 
-[![Hackage](https://img.shields.io/hackage/v/sdl2-mixer.svg)](https://hackage.haskell.org/package/sdl2-mixer)
-[![Build Status](https://travis-ci.org/sbidin/sdl2-mixer.svg?branch=master)](https://travis-ci.org/sbidin/sdl2-mixer)
+[![cabal](https://github.com/haskell-game-archives/sdl2-mixer/actions/workflows/cabal.yml/badge.svg)](https://github.com/haskell-game-archives/sdl2-mixer/actions/workflows/cabal.yml)
+[![format](https://github.com/haskell-game-archives/sdl2-mixer/actions/workflows/format.yml/badge.svg)](https://github.com/haskell-game-archives/sdl2-mixer/actions/workflows/format.yml)
+[![lint](https://github.com/haskell-game-archives/sdl2-mixer/actions/workflows/lint.yml/badge.svg)](https://github.com/haskell-game-archives/sdl2-mixer/actions/workflows/lint.yml)
+[![dependencies check](https://github.com/haskell-game-archives/sdl2-mixer/actions/workflows/outdated.yml/badge.svg)](https://github.com/haskell-game-archives/sdl2-mixer/actions/workflows/outdated.yml)
 
 #### Haskell bindings to SDL2_mixer
 
